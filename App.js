@@ -21,10 +21,14 @@ export default function App() {
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
-      await SplashScreen.hideAsync();
+      try {
+        await SplashScreen.preventAutoHideAsync(); 
+        await SplashScreen.hideAsync();
+      } catch (e) {
+        console.warn("Error with splash screen: ", e);
+      }
     }
   }, [fontsLoaded]);
-
 
   if (!fontsLoaded) {
     return null; 
@@ -34,7 +38,10 @@ export default function App() {
     return (
       <AppLoading
         startAsync={useFonts} 
-        onFinish={() => setFont(true)}
+        onFinish={() => {
+          setFont(true);
+          onLayoutRootView(); // Make sure to call this after setting fonts
+        }}
         onError={console.warn}
       />
     );
@@ -51,4 +58,3 @@ export default function App() {
     </NavigationContainer>
   );
 }
- 

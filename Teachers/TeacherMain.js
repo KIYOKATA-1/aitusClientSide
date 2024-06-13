@@ -3,7 +3,7 @@ import { StatusBar, SafeAreaView, Text, View, FlatList, TouchableOpacity, Modal,
 import Header from '../Components/Header';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faUsers, faAlignCenter } from '@fortawesome/free-solid-svg-icons';
-import { TMstyle } from '../styles/teacherMain';
+import { TMstyle } from '../TeacherStyles/teacherMain';
 import { Picker } from '@react-native-picker/picker';
 
 export default function TeacherMain() {

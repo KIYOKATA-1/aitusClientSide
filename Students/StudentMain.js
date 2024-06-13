@@ -3,7 +3,7 @@ import { StatusBar, SafeAreaView, Text, View, FlatList, TouchableOpacity, Modal,
 import Header from '../Components/Header';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faUsers, faAlignCenter } from '@fortawesome/free-solid-svg-icons';
-import { Mstyle } from '../styles/studentMain';
+import { Mstyle } from '../StudentStyles/studentMain';
 
 const subjects = [
   { id: '1', name: 'Calculus 1', teacher: 'Teacher Name' },
