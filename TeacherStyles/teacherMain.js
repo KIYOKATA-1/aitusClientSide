@@ -18,11 +18,18 @@ export const TMstyle = StyleSheet.create({
     },
     picker: {
         flex: 1,
-        height: 40,
+        height: 20,
     },
     dropdownText: {
         fontSize: 14,
         fontFamily: 'noto-sans',
-        marginRight: 10,
+        position: 'relative',
+        marginRight: 1,
+    },
+    pickerItem:{
+        position: 'relative',
+        fontSize: 14,
+        width: 25,
+        height: 20,
     }
 });

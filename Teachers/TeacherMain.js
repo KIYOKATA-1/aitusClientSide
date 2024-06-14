@@ -41,14 +41,14 @@ export default function TeacherMain() {
           </Picker>
         </View>
         <View style={TMstyle.dropdownContainer}>
-          <Text style={TMstyle.dropdownText}>Major {section}</Text>
+          <Text style={TMstyle.dropdownText}>Major{section}</Text>
           <Picker
             selectedValue={section}
             onValueChange={(itemValue, itemIndex) => setSection(itemValue)}
             style={TMstyle.picker}
             mode="dropdown"
           >
-            <Picker.Item label="SE" value="SE" />
+            <Picker.Item label="SE" value="SE" style={TMstyle.pickerItem}/>
             <Picker.Item label="IT" value="IT" />
           </Picker>
         </View>
