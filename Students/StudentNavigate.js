@@ -30,7 +30,6 @@ export default function StudentNav() {
   return (
     <Tab.Navigator
       screenOptions={() => ({
-        headerShown: false,
         tabBarStyle: {
           paddingHorizontal: 5,
           backgroundColor: 'snow',
