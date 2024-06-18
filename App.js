@@ -8,6 +8,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import Signin from './Components/Signin';
 import StudentNav from './Students/StudentNavigate';
 import Subject from './Components/Subject';
+import { UserProvider } from './context/UserContext';
 import TeacherNav from './Teachers/TeacherNavigate';
 
 const Stack = createStackNavigator();
