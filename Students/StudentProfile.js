@@ -13,8 +13,8 @@ export default function StudentProfile() {
       <View style={PrStyle.userDataC}>
         <Image source={IMAGES.AVATAR} style={PrStyle.avatar}/>
         <View style={PrStyle.userData}>
-          <Text style={PrStyle.username}>Park Pavel</Text>
-          <Text style={PrStyle.username}>220529</Text>
+          <Text style={PrStyle.username}>Name Lastname</Text>
+          <Text style={PrStyle.username}>Barcode</Text>
         </View>
       </View>
 

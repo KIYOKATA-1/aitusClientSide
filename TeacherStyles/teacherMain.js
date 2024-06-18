@@ -23,8 +23,9 @@ export const TMstyle = StyleSheet.create({
     height: 30,
     justifyContent: 'flex-start',
     paddingHorizontal: 10,
+    backgroundColor: '#fff',
     borderWidth: 2,
-    borderRadius: 15,
+    borderRadius: 10,
     marginHorizontal: 5, 
     borderColor: '#000'
   },
@@ -116,4 +117,33 @@ export const TMstyle = StyleSheet.create({
     shadowRadius: 6, 
     elevation: 10,
   },
+  subjectName:{
+    position: 'relative',
+    textAlign: 'center',
+    margin: 5,
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  groupData:{
+    position: 'relative',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 5,
+  },
+  groupDataText:{
+    position: 'relative',
+    fontSize: 16,
+    fontFamily: 'noto-sans',
+    textAlign: 'center',
+  },
+  groupBtn:{
+    position: 'relative',
+    margin: 15,
+    borderWidth: 1.5,
+    width: 250,
+    backgroundColor: '#F8F8F8',
+    height: 30,
+    borderRadius: 10,
+    borderColor: '#0F6CBF',
+  }
 });

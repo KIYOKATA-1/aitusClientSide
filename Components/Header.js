@@ -10,8 +10,8 @@ export default function Header() {
 
     <View style={headerStyle.about}>
         <Avatar source={IMAGES.AVATAR} style={headerStyle.circle}/>
-        <Text style={headerStyle.headerText}>Pavel Park {'\n'} 
-        <Text style={headerStyle.barcode}>220529</Text></Text>
+        <Text style={headerStyle.headerText}>Name Lastname {'\n'} 
+        <Text style={headerStyle.barcode}>Barcode</Text></Text>
     </View>
     </View>
   );
