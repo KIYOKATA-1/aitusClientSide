@@ -7,9 +7,10 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import Signin from './Components/Signin';
 import StudentNav from './Students/StudentNavigate';
-import Subject from './Components/Subject';
-import { UserProvider } from './context/UserContext';
 import TeacherNav from './Teachers/TeacherNavigate';
+import Subject from './Components/Subject';
+import StudentMain from './Students/StudentMain';
+
 
 const Stack = createStackNavigator();
 
@@ -41,6 +42,7 @@ export default function App() {
         <Stack.Screen name="StudentNav" component={StudentNav} />
         <Stack.Screen name="TeacherNav" component={TeacherNav} />
         <Stack.Screen name='Subject' component={Subject}/>
+        <Stack.Screen name='StudentMain' component={StudentMain}/>
       </Stack.Navigator>
       <StatusBar style="auto" />
     </NavigationContainer>

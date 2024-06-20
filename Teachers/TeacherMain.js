@@ -1,84 +1,153 @@
 import React, { useState } from 'react';
 import { StatusBar, SafeAreaView, Text, View, TouchableOpacity, Modal, FlatList, ScrollView } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import Header from '../Components/Header';
 import { TMstyle } from '../TeacherStyles/teacherMain';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faX } from '@fortawesome/free-solid-svg-icons';
-import { majors, getSubjectForMajor } from '../Components/MajorData';
+import { faGraduationCap, faUserGroup, faX } from '@fortawesome/free-solid-svg-icons';
+import { groups, getSubjectsForGroup } from '../Components/MajorData';
 
 export default function TeacherMain({ navigation }) {
-  const [trimester, setTrimester] = useState('1');
-  const [course, setCourse] = useState('1');
-  const [section, setSection] = useState('SE');
-  const [modalVisible, setModalVisible] = useState(false);
-  const [majorData, setMajorData] = useState(getSubjectForMajor('SE'));
+  const [subject, setSubject] = useState('');
+  const [group, setGroup] = useState('SE-2201');
+  const [groupModalVisible, setGroupModalVisible] = useState(false);
+  const [subjectModalVisible, setSubjectModalVisible] = useState(false);
+  const [datePickerVisible, setDatePickerVisible] = useState(false);
+  const [timePickerVisible, setTimePickerVisible] = useState(false);
+  const [currentDateId, setCurrentDateId] = useState(null);
+  const [availableSubjects, setAvailableSubjects] = useState(getSubjectsForGroup('SE-2201'));
+  const [dates, setDates] = useState([{ id: 1, date: '2024-06-20', time: '10:00' }]);
 
-  const handleMajorChange = (shortName) => {
-    setSection(shortName);
-    setMajorData(getSubjectForMajor(shortName));
-    setModalVisible(false);
+  const handleGroupChange = (groupName) => {
+    setGroup(groupName);
+    setAvailableSubjects(getSubjectsForGroup(groupName));
+    setSubject(''); // сбрасываем выбранный предмет при изменении группы
+    setGroupModalVisible(false);
   };
 
-  const handleTrimesterChange = () => {
-    setTrimester((prevTrimester) => {
-      const nextTrimester = (parseInt(prevTrimester) % 3) + 1;
-      return nextTrimester.toString();
-    });
+  const handleSubjectChange = (subjectName) => {
+    setSubject(subjectName);
+    setSubjectModalVisible(false);
   };
 
-  const handleCourseChange = () => {
-    setCourse((prevCourse) => {
-      const nextCourse = (parseInt(prevCourse) % 3) + 1;
-      return nextCourse.toString();
-    });
+  const addDate = () => {
+    const newDate = { id: dates.length + 1, date: '', time: '' };
+    setDates([...dates, newDate]);
+    setCurrentDateId(newDate.id);
+    setDatePickerVisible(true);
+  };
+
+  const removeDate = (id) => {
+    setDates(dates.filter(date => date.id !== id));
+  };
+
+  const handleDateChange = (event, selectedDate) => {
+    if (selectedDate) {
+      const currentDate = selectedDate || new Date();
+      const formattedDate = currentDate.toISOString().split('T')[0];
+      const updatedDates = dates.map(date => {
+        if (date.id === currentDateId) {
+          return { ...date, date: formattedDate };
+        }
+        return date;
+      });
+      setDates(updatedDates);
+      setDatePickerVisible(false);
+      setTimePickerVisible(true);
+    } else {
+      setDatePickerVisible(false);
+    }
+  };
+
+  const handleTimeChange = (event, selectedTime) => {
+    if (selectedTime) {
+      const currentTime = selectedTime || new Date();
+      const hours = currentTime.getHours().toString().padStart(2, '0');
+      const minutes = currentTime.getMinutes().toString().padStart(2, '0');
+      const formattedTime = `${hours}:${minutes}`;
+      const updatedDates = dates.map(date => {
+        if (date.id === currentDateId) {
+          return { ...date, time: formattedTime };
+        }
+        return date;
+      });
+      setDates(updatedDates);
+    }
+    setTimePickerVisible(false);
+    setCurrentDateId(null);
   };
 
   return (
     <SafeAreaView style={TMstyle.container}>
       <StatusBar style="auto" />
       <Header />
-      <ScrollView>
+      <ScrollView style={TMstyle.teacherData}>
         <View style={TMstyle.dropdowns}>
           <View style={TMstyle.inlineContainer}>
-            <TouchableOpacity style={TMstyle.dropdownContainer} onPress={handleTrimesterChange}>
-              <Text style={TMstyle.dropdownText}>Trimester</Text>
-              <Text style={TMstyle.value}>{trimester}</Text>
+            <TouchableOpacity style={TMstyle.dropdownContainer} onPress={() => setSubjectModalVisible(true)} disabled={!availableSubjects.length}>
+              <FontAwesomeIcon icon={faGraduationCap} size={16} />
+              <Text style={TMstyle.value}>{subject || 'Select a subject'}</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={TMstyle.dropdownContainer} onPress={handleCourseChange}>
-              <Text style={TMstyle.dropdownText}>Course</Text>
-              <Text style={TMstyle.value}>{course}</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={TMstyle.dropdownContainer} onPress={() => setModalVisible(true)}>
-              <Text style={TMstyle.dropdownText}>Major</Text>
-              <Text style={TMstyle.value}>{section}</Text>
+            <TouchableOpacity style={TMstyle.dropdownContainer} onPress={() => setGroupModalVisible(true)}>
+              <FontAwesomeIcon icon={faUserGroup} size={16} />
+              <Text style={TMstyle.value}>{group}</Text>
             </TouchableOpacity>
           </View>
 
           <Modal
             animationType="slide"
             transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => setModalVisible(false)}
+            visible={groupModalVisible}
+            onRequestClose={() => setGroupModalVisible(false)}
           >
             <View style={TMstyle.centeredView}>
               <View style={TMstyle.modalView}>
                 <FlatList
-                  data={majors}
-                  keyExtractor={(item) => item.shortName}
+                  data={groups}
+                  keyExtractor={(item) => item.groupName}
                   renderItem={({ item }) => (
                     <TouchableOpacity
                       style={TMstyle.optionButton}
-                      onPress={() => handleMajorChange(item.shortName)}
+                      onPress={() => handleGroupChange(item.groupName)}
                     >
-                      <Text style={TMstyle.optionText}>{item.fullName}</Text>
+                      <Text style={TMstyle.optionText}>{item.groupName}</Text>
                     </TouchableOpacity>
                   )}
                 />
                 <TouchableOpacity
                   style={TMstyle.closeButton}
-                  onPress={() => setModalVisible(false)}
+                  onPress={() => setGroupModalVisible(false)}
+                >
+                  <FontAwesomeIcon icon={faX} size={18} style={TMstyle.closeIcon}/>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
+
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={subjectModalVisible}
+            onRequestClose={() => setSubjectModalVisible(false)}
+          >
+            <View style={TMstyle.centeredView}>
+              <View style={TMstyle.modalView}>
+                <FlatList
+                  data={availableSubjects}
+                  keyExtractor={(item) => item}
+                  renderItem={({ item }) => (
+                    <TouchableOpacity
+                      style={TMstyle.optionButton}
+                      onPress={() => handleSubjectChange(item)}
+                    >
+                      <Text style={TMstyle.optionText}>{item}</Text>
+                    </TouchableOpacity>
+                  )}
+                />
+                <TouchableOpacity
+                  style={TMstyle.closeButton}
+                  onPress={() => setSubjectModalVisible(false)}
                 >
                   <FontAwesomeIcon icon={faX} size={18} style={TMstyle.closeIcon}/>
                 </TouchableOpacity>
@@ -86,23 +155,53 @@ export default function TeacherMain({ navigation }) {
             </View>
           </Modal>
         </View>
-
         <View style={TMstyle.main}>
-        {majorData.subjects.map((subject, subjectIndex) => (
-            <ScrollView key={subjectIndex} style={TMstyle.subjectBlock}>
-              <Text style={TMstyle.subjectName}>{subject.name}</Text>
-                <View style={TMstyle.groupData}>
-                {subject.groups.map((group, groupIndex) => (
-                  <TouchableOpacity key={groupIndex} style={TMstyle.groupBtn} onPress={() => navigation.navigate('Subject', {
-                                    groupNum: group, subjectName: subject.name
-                  })}>
-                    <Text style={TMstyle.groupDataText}>{group}</Text>
-                  </TouchableOpacity>
-                ))}
+          {dates.map((dateItem) => (
+            <TouchableOpacity
+              key={dateItem.id}
+              onPress={() =>
+                navigation.navigate('Subject', {
+                  groupNum: group,
+                  subjectName: subject,
+                  selectedDate: dateItem.date,
+                })
+              }
+            >
+              <View style={TMstyle.dateContainer}>
+                <View style={TMstyle.dateTimeContainer}>
+                  <Text style={TMstyle.dateText}>{dateItem.date || 'No date selected'}</Text>
+                  <Text style={TMstyle.separator}>|</Text>
+                  <Text style={TMstyle.timeText}>{dateItem.time || 'No time selected'}</Text>
                 </View>
-            </ScrollView>
+                <TouchableOpacity
+                  style={TMstyle.removeButton}
+                  onPress={() => removeDate(dateItem.id)}
+                >
+                  <FontAwesomeIcon icon={faX} size={18} style={TMstyle.removeIcon} />
+                </TouchableOpacity>
+              </View>
+            </TouchableOpacity>
           ))}
+          <TouchableOpacity style={TMstyle.addButton} onPress={addDate}>
+            <Text style={TMstyle.addButtonText}>Add Date</Text>
+          </TouchableOpacity>
         </View>
+        {datePickerVisible && (
+          <DateTimePicker
+            value={new Date()}
+            mode="date"
+            display="default"
+            onChange={handleDateChange}
+          />
+        )}
+        {timePickerVisible && (
+          <DateTimePicker
+            value={new Date()}
+            mode="time"
+            display="default"
+            onChange={handleTimeChange}
+          />
+        )}
       </ScrollView>
     </SafeAreaView>
   );

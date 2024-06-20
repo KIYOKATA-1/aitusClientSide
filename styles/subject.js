@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+
 export const SbStyle = StyleSheet.create({
     container:{
         margin: 0,
@@ -9,25 +10,34 @@ export const SbStyle = StyleSheet.create({
     studentData:{
         position:'relative',
         margin: 10,
-        display: 'flex',
+        paddingHorizontal: 10,
+    },
+    textGroup: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        flexWrap: 'wrap',
+        alignItems: 'center',
+        marginVertical: 10,
+    },
+    btnGroup: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        marginTop: 10,
     },
     group:{
-        position:'relative',
         fontSize: 16,
         fontWeight: '400',
-        fontStyle: 'italic'
+        fontStyle: 'italic',
+        textAlign: 'center',
     },
     subjectN:{
-        position: 'relative',
         fontSize: 18,
-        fontWeight: '700',
-        marginBottom: 10,
+        fontWeight: '600',
+        fontStyle: 'italic',
+        textAlign: 'center',
+        fontFamily: 'noto-sans'
     },
     week:{
-        position: 'relative',
         padding: 10,
         height: 100,
         borderTopWidth: 0.5,
@@ -67,27 +77,34 @@ export const SbStyle = StyleSheet.create({
         fontFamily: 'noto-sans',
         fontWeight: 'bold'
     },
-    AllPresent:{
+    dateBtn:{
         position: 'relative',
         borderWidth: 1,
         padding: 5,
+        width: 175,
         justifyContent: 'center',
+        marginHorizontal: 10,
         alignItems: 'center',
         borderRadius: 15,
-    },
-    gobackContainer:{
-        position: 'relative',
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     backButton:{
-        position: 'relative',
-        borderWidth: 1,
-        height: 40,
-        borderRadius: 15,
-        justifyContent: 'center',
-        padding: 5,
-
+      position: 'relative',
+      borderWidth: 1,
+      padding: 5,
+      marginHorizontal: 10,
+      width: 175,
+      backgroundColor: '#0F6CBF',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderColor: '#000',
+      borderRadius: 15,
+    },
+    backBtnText:{
+      color: '#fff', 
+      textAlign: 'center',
+      textTransform: 'uppercase',
+      fontFamily: 'noto-sans',
+      fontWeight: 'bold'
     },
     infoBlock: {
         flexDirection: 'row',
@@ -95,32 +112,37 @@ export const SbStyle = StyleSheet.create({
         alignItems: 'center',
         paddingVertical: 5,
         paddingHorizontal: 10,
+        marginVertical: 10,
         borderBottomWidth: 1,
         borderBottomColor: 'lightgray',
-      },
-      infoText: {
+    },
+    infoText: {
         fontSize: 18,
-        fontWeight: 'bold',
-      },
-      infoLabels: {
+        fontWeight: '700',
+        marginLeft: 10,
+    },
+    infoLabels: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: 150,
-      },
-      labelText: {
+    },
+    labelText: {
+        fontSize: 13,
+        fontWeight: '600',
+        textTransform: 'uppercase',
+        textAlign: 'center',
+    },
+    separator: {
         fontSize: 16,
         fontWeight: 'bold',
         textAlign: 'center',
-      },
-      separator: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        textAlign: 'center',
-      },
-      main: {
-        flex: 1,
-      },
-      studentRow: {
+    },
+    main: {
+        flex: 2,
+        paddingHorizontal: 5,
+        position: 'relative',
+    },
+    studentRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'baseline',
@@ -129,10 +151,10 @@ export const SbStyle = StyleSheet.create({
         paddingRight: 10,
         borderBottomColor: 'lightgray',
         margin: 5,
-      },
-      studentName: {
+    },
+    studentName: {
         fontSize: 16,
         width: '50%',
         margin: 5,
-      },
+    },
 });

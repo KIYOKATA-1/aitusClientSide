@@ -6,6 +6,10 @@ export const TMstyle = StyleSheet.create({
     padding: 0,
     paddingTop: 20,
     flex: 1,
+  },teacherData:{
+    position: 'relative',
+    flex: 2,
+    paddingVertical: 20,
   },
   dropdowns:{
     position: 'relative',
@@ -20,8 +24,8 @@ export const TMstyle = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    height: 30,
-    justifyContent: 'flex-start',
+    height: 65,
+    justifyContent: 'center',
     paddingHorizontal: 10,
     backgroundColor: '#fff',
     borderWidth: 2,
@@ -35,9 +39,11 @@ export const TMstyle = StyleSheet.create({
     marginHorizontal: 5, 
   },
   value: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginHorizontal: 5, 
+    fontSize: 14,
+    fontWeight: '600',
+    marginHorizontal: 10, 
+    textAlign: 'left',
+    justifyContent: 'center',
   },
   centeredView: {
     flex: 1,
@@ -85,15 +91,15 @@ export const TMstyle = StyleSheet.create({
     borderRadius: 10,
     width: 110,
     borderWidth: 2,
-    backgroundColor: '#fff',
+    backgroundColor: 'transparent',
     paddingVertical: 5,
     height: 30,
     alignItems: 'center',
     justifyContent: 'center',
-    borderColor: '#FF0000'
+    borderColor: '#fff'
   },
   closeIcon: {
-    color: '#FF0000',
+    color: '#fff',
     textTransform: 'uppercase',
   },
   main:{
@@ -145,5 +151,70 @@ export const TMstyle = StyleSheet.create({
     height: 30,
     borderRadius: 10,
     borderColor: '#0F6CBF',
+  },
+  main: {
+    padding: 20,
+  },
+  dateContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    paddingVertical: 10,
+  },
+  dateTimeContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 50,
+  },
+  dateTimeText: {
+    fontSize: 16,
+    fontFamily: 'noto-sans',
+    textAlign: 'center',
+  },
+  removeButton: {
+    padding: 10,
+  },
+  removeIcon: {
+    color: '#ff0000',
+  },
+  addButton: {
+    marginTop: 20,
+    backgroundColor: '#007bff',
+    borderRadius: 5,
+    justifyContent: 'center',
+    height: 35,
+    alignItems: 'center',
+  },
+  addButtonText: {
+    color: '#fff',
+    textAlign: 'center',
+    fontFamily: 'noto-sans',
+    textTransform: 'uppercase',
+    fontSize: 16,
+  },
+
+  dateText:{
+    position: 'relative',
+    fontFamily: 'noto-sans',
+    fontSize: 16,
+    fontWeight: '700',
+  },separator:{
+    position: 'relative',
+    fontFamily: 'noto-sans',
+    fontSize: 16,
+    fontWeight: '700',
+  },timeText:{
+    position: 'relative',
+    fontFamily: 'noto-sans',
+    fontSize: 16,
+    fontWeight: '700',
   }
 });
+
+
+
+

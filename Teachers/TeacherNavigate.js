@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faHouse } from '@fortawesome/free-solid-svg-icons/faHouse'
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
+import TeacherProfile from "./TeacherProfile";
 
 const TriangleIcon = () => (
   <View
@@ -54,6 +55,18 @@ export default function TeacherNav() {
           tabBarIcon: ({ focused }) => (
             <>
               <FontAwesomeIcon icon={faHouse} size={25} />
+              {focused && <TriangleIcon />}
+            </>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={TeacherProfile}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <>
+              <FontAwesomeIcon icon={faUser} size={25} />
               {focused && <TriangleIcon />}
             </>
           ),

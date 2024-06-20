@@ -4,12 +4,12 @@ import Header from '../Components/Header';
 import { Mstyle } from '../StudentStyles/studentMain';
 
 const subjects = [
-  { id: '1', name: 'Calculus 1', teacher: 'Teacher Name' },
-  { id: '2', name: 'Foreign Language 1', teacher: 'Teacher' },
-  { id: '3', name: 'Linear Algebra', teacher: 'Teacher' },
-  { id: '4', name: 'Physical Education', teacher: 'Teacher' },
-  { id: '5', name: 'Information and Communication Technologies ', teacher: 'Teacher' },
-  { id: '6', name: 'Introduction to Programming 1', teacher: 'Teacher' },
+  { id: '1', name: 'Calculus 1', teacher: 'Teacher Name', dates: ['2024-06-10', '2024-06-17'] },
+  { id: '2', name: 'Foreign Language 1', teacher: 'Teacher', dates: ['2024-06-11', '2024-06-18'] },
+  { id: '3', name: 'Linear Algebra', teacher: 'Teacher', dates: ['2024-06-12', '2024-06-19'] },
+  { id: '4', name: 'Physical Education', teacher: 'Teacher', dates: ['2024-06-13', '2024-06-20'] },
+  { id: '5', name: 'Information and Communication Technologies', teacher: 'Teacher', dates: ['2024-06-14', '2024-06-21'] },
+  { id: '6', name: 'Introduction to Programming 1', teacher: 'Teacher', dates: ['2024-06-15', '2024-06-22'] },
 ];
 
 const months = [
@@ -19,10 +19,26 @@ const months = [
 
 const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
+const getRandomAttendance = () => Math.floor(Math.random() * 100) + 1;
+
+const subjectsWithAttendance = subjects.map(subject => ({
+  ...subject,
+  attendance: getRandomAttendance(),
+}));
+
+const getBorderColor = (attendance) => {
+  if (attendance < 70) {
+    return '#FF0000';
+  } else if (attendance >= 70 && attendance < 85) {
+    return '#CCFF00';
+  } else {
+    return '#00FF0A';
+  }
+};
+
 export default function StudentMain() {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedSubject, setSelectedSubject] = useState(null);
-  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
 
   const openModal = (item) => {
     setSelectedSubject(item);
@@ -33,25 +49,13 @@ export default function StudentMain() {
     setModalVisible(false);
   };
 
-  const changeMonth = () => {
-    setSelectedMonth((prevMonth) => (prevMonth + 1) % 12);
-  };
-
-  const getDaysInMonth = (month) => {
-    const year = new Date().getFullYear();
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-    const daysArray = [];
-    for (let i = 1; i <= daysInMonth; i++) {
-      const date = new Date(year, month, i);
-      const dayOfWeek = days[date.getDay()];
-      const day = i < 10 ? `0${i}` : i;
-      const monthFormatted = months[month].slice(0, 3);
-      const yearFormatted = year.toString().slice(2);
-
-      daysArray.push({ id: i.toString(), date: `${dayOfWeek} ${day} ${monthFormatted} ${yearFormatted}` });
-    }
-    return daysArray;
+  const formatDate = (dateStr) => {
+    const date = new Date(dateStr);
+    const day = days[date.getDay()];
+    const dayOfMonth = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
+    const month = months[date.getMonth()].slice(0, 3);
+    const year = date.getFullYear().toString().slice(2);
+    return `${day} ${dayOfMonth} ${month} ${year}`;
   };
 
   return (
@@ -60,14 +64,14 @@ export default function StudentMain() {
       <Header />
 
       <FlatList
-        data={subjects}
+        data={subjectsWithAttendance}
         keyExtractor={item => item.id}
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => openModal(item)} style={Mstyle.subject}>
             <View style={Mstyle.subjectContent}>
               <Text style={Mstyle.subjectDataTxt}>{item.name} | {item.teacher}</Text>
-              <View style={Mstyle.attendance}>
-                <Text>90</Text>
+              <View style={[Mstyle.attendance, { borderColor: getBorderColor(item.attendance), borderWidth: 2 }]}>
+                <Text>{item.attendance}%</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -86,10 +90,6 @@ export default function StudentMain() {
               <Text style={Mstyle.subjectName}>{selectedSubject.name} | {selectedSubject.teacher}</Text>
             </View>
 
-            <TouchableOpacity onPress={changeMonth} style={Mstyle.changeMonthBtn}>
-              <Text style={Mstyle.changeMonthBtnText}>Select Month | {months[selectedMonth]}</Text>
-            </TouchableOpacity>
-
             <View style={Mstyle.header}>
               <Text style={Mstyle.headerText}>Date</Text>
               <Text style={Mstyle.headerText}>Status</Text>
@@ -97,20 +97,19 @@ export default function StudentMain() {
             </View>
 
             <FlatList
-              data={getDaysInMonth(selectedMonth)}
+              data={selectedSubject.dates.map((date, index) => ({ id: index.toString(), date }))}
               keyExtractor={item => item.id}
               renderItem={({ item }) => (
                 <View style={Mstyle.dateItem}>
-                  <Text style={Mstyle.itemText}>{item.date}</Text>
+                  <Text style={[Mstyle.itemText, Mstyle.dateData]}>{formatDate(item.date)}</Text>
                   <Text style={Mstyle.itemText}>Absent</Text>
                   <Text style={Mstyle.itemText}>0/2</Text>
                 </View>
               )}
             />
-
-            <TouchableOpacity onPress={closeModal} style={Mstyle.closeBtn}>
-              <Text style={Mstyle.closeBtnText}>Close</Text>
-            </TouchableOpacity>
+          <TouchableOpacity onPress={closeModal} style={Mstyle.closeBtn}>
+            <Text style={Mstyle.closeBtnText}>Close</Text>
+          </TouchableOpacity>
           </View>
         </Modal>
       )}

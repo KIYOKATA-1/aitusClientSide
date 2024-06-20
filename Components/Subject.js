@@ -5,10 +5,15 @@ import { SbStyle } from '../styles/subject';
 import Header from './Header';
 import students from './studentData';
 import { useNavigation } from '@react-navigation/native';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
 
 const Subject = ({ route }) => {
-  const { groupNum, subjectName } = route.params;
+  const { groupNum, subjectName, selectedDate } = route.params;
   const [attendance, setAttendance] = useState({});
+  const [date, setDate] = useState(new Date(selectedDate));
+  const [showPicker, setShowPicker] = useState(false);
   const navigation = useNavigation();
 
   const attendanceOptions = (id) => [
@@ -18,7 +23,7 @@ const Subject = ({ route }) => {
   ];
 
   const toggleAttendance = (id, value) => {
-    setAttendance(prev => ({
+    setAttendance((prev) => ({
       ...prev,
       [id]: value,
     }));
@@ -33,7 +38,23 @@ const Subject = ({ route }) => {
   };
 
   const goBack = () => {
-    navigation.goBack(); 
+    navigation.goBack();
+  };
+
+  const showDatePicker = () => {
+    setShowPicker(true);
+  };
+
+  const onDateChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShowPicker(false);
+    setDate(currentDate);
+    markAllPresent();
+  };
+
+  const formatDate = (date) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
   };
 
   return (
@@ -41,30 +62,27 @@ const Subject = ({ route }) => {
       <Header />
 
       <View style={SbStyle.studentData}>
-        <Text style={SbStyle.subjectN}>{subjectName}</Text>
-        <Text style={SbStyle.group}>{groupNum}</Text>
-        <TouchableOpacity
-          onPress={markAllPresent}
-          style={SbStyle.AllPresent} 
-        >
-          <Text style={SbStyle.buttonText}>Present All</Text>
-        </TouchableOpacity>
+             <View style={SbStyle.textGroup}>
+                <Text style={SbStyle.subjectN}>{subjectName}</Text>
+                <Text style={SbStyle.group}>{groupNum}</Text>
+            </View>
 
-        <TouchableOpacity
-          onPress={goBack}
-          style={SbStyle.backButton}
-        >
-          <Text style={SbStyle.buttonText}>Go Back</Text>
-        </TouchableOpacity>
+            <View style={SbStyle.btnGroup}>
+                <TouchableOpacity onPress={showDatePicker} style={SbStyle.dateBtn}>
+                    <Text style={SbStyle.buttonText}>{showPicker ? 'Select Date' : formatDate(date)}</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={goBack} style={SbStyle.backButton}>
+                    <Text style={SbStyle.backBtnText}>Go Back</Text>
+                </TouchableOpacity>
+            </View>
       </View>
 
       <View style={SbStyle.infoBlock}>
         <Text style={SbStyle.infoText}>Students</Text>
         <View style={SbStyle.infoLabels}>
           <Text style={SbStyle.labelText}>Absent</Text>
-          <Text style={SbStyle.separator}>|</Text>
           <Text style={SbStyle.labelText}>Late</Text>
-          <Text style={SbStyle.separator}>|</Text>
           <Text style={SbStyle.labelText}>Present</Text>
         </View>
       </View>
@@ -73,13 +91,12 @@ const Subject = ({ route }) => {
         {students.map((student, index) => (
           <View key={student.id} style={SbStyle.studentRow}>
             <Text style={SbStyle.studentName}>{`${index + 1}. ${student.name}`}</Text>
-            <RadioGroup
-              radioButtons={attendanceOptions(student.id)}
-              layout="row"
-            />
+            <RadioGroup radioButtons={attendanceOptions(student.id)} layout="row" />
           </View>
         ))}
       </ScrollView>
+
+      {showPicker && <DateTimePicker value={date} mode="date" display="default" onChange={onDateChange} />}
     </View>
   );
 };
