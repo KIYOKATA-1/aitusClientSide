@@ -13,7 +13,6 @@ const Subject = ({ route }) => {
   const { groupNum, subjectName, selectedDate } = route.params;
   const [attendance, setAttendance] = useState({});
   const [date, setDate] = useState(new Date(selectedDate));
-  const [showPicker, setShowPicker] = useState(false);
   const navigation = useNavigation();
 
   const attendanceOptions = (id) => [
@@ -41,10 +40,6 @@ const Subject = ({ route }) => {
     navigation.goBack();
   };
 
-  const showDatePicker = () => {
-    setShowPicker(true);
-  };
-
   const onDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShowPicker(false);
@@ -68,9 +63,9 @@ const Subject = ({ route }) => {
             </View>
 
             <View style={SbStyle.btnGroup}>
-                <TouchableOpacity onPress={showDatePicker} style={SbStyle.dateBtn}>
-                    <Text style={SbStyle.buttonText}>{showPicker ? 'Select Date' : formatDate(date)}</Text>
-                </TouchableOpacity>
+                <View style={SbStyle.dateBtn}>
+                    <Text style={SbStyle.buttonText}>{formatDate(date)}</Text>
+                </View>
 
                 <TouchableOpacity onPress={goBack} style={SbStyle.backButton}>
                     <Text style={SbStyle.backBtnText}>Go Back</Text>
@@ -96,7 +91,6 @@ const Subject = ({ route }) => {
         ))}
       </ScrollView>
 
-      {showPicker && <DateTimePicker value={date} mode="date" display="default" onChange={onDateChange} />}
     </View>
   );
 };

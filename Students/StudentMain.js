@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StatusBar, SafeAreaView, Text, View, FlatList, TouchableOpacity, Modal } from 'react-native';
 import Header from '../Components/Header';
 import { Mstyle } from '../StudentStyles/studentMain';
+import AttendanceCircle from '../Components/AttendanceCircle';
 
 const subjects = [
   { id: '1', name: 'Calculus 1', teacher: 'Teacher Name', dates: ['2024-06-10', '2024-06-17'] },
@@ -70,8 +71,8 @@ export default function StudentMain() {
           <TouchableOpacity onPress={() => openModal(item)} style={Mstyle.subject}>
             <View style={Mstyle.subjectContent}>
               <Text style={Mstyle.subjectDataTxt}>{item.name} | {item.teacher}</Text>
-              <View style={[Mstyle.attendance, { borderColor: getBorderColor(item.attendance), borderWidth: 2 }]}>
-                <Text>{item.attendance}%</Text>
+              <View style={Mstyle.attendance}>
+                <AttendanceCircle attendance={item.attendance} color={getBorderColor(item.attendance)} />
               </View>
             </View>
           </TouchableOpacity>

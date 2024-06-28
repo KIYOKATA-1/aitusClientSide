@@ -56,7 +56,7 @@ export const TMstyle = StyleSheet.create({
     top: 20,
     width: '100%',
     height: '96%',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
     padding: 30,

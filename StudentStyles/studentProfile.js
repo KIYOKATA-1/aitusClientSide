@@ -41,6 +41,10 @@ export const PrStyle = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'space-between',
       marginBottom: 10,
+      borderWidth: 0.5,
+      padding: 10,
+      height: 100,
+      alignItems: 'center',
     },
     academItem: {
       flex: 1,
@@ -48,6 +52,7 @@ export const PrStyle = StyleSheet.create({
     },
     academLabel: {
       fontSize: 16,
+      textTransform: 'uppercase',
       fontWeight: 'bold',
     },
     academValue: {

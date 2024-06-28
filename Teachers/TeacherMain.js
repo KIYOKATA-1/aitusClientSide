@@ -86,7 +86,7 @@ export default function TeacherMain({ navigation }) {
           <View style={TMstyle.inlineContainer}>
             <TouchableOpacity style={TMstyle.dropdownContainer} onPress={() => setSubjectModalVisible(true)} disabled={!availableSubjects.length}>
               <FontAwesomeIcon icon={faGraduationCap} size={16} />
-              <Text style={TMstyle.value}>{subject || 'Select a subject'}</Text>
+              <Text style={TMstyle.value}>{subject || 'Subject'}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={TMstyle.dropdownContainer} onPress={() => setGroupModalVisible(true)}>

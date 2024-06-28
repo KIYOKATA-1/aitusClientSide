@@ -29,7 +29,8 @@ export const Mstyle = StyleSheet.create({
     fontSize: 14,
     width: 180,
     textAlign: 'baseline',
-    fontFamily: 'noto-sans'
+    fontFamily: 'noto-sans',
+    flexWrap: 'wrap'
   },
   subjectContent: {
     flexDirection: 'row',
@@ -38,7 +39,6 @@ export const Mstyle = StyleSheet.create({
   },
   attendance: {
     marginRight: 20,
-    borderWidth: 2,
     width: 60,
     height: 60,
     justifyContent: 'center',
